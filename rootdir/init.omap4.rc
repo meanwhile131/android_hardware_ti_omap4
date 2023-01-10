@@ -13,6 +13,8 @@ on fs
     insmod /lib/modules/omaplfb.ko
     insmod /system/lib/modules/pvrsrvkm.ko
     insmod /system/lib/modules/omaplfb.ko
+    insmod /system/vendor/lib/modules/pvrsrvkm.ko
+    insmod /system/vendor/lib/modules/omaplfb.ko
 
 service pvrsrvinit /system/bin/pvrsrvinit
     class core
