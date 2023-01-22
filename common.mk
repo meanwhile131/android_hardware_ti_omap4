@@ -59,3 +59,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     pvrsrvinit \
     libPVRScopeServices.so
+
+# compatiblity for older binaries
+PRODUCT_PACKAGES += \
+    libcorkscrew
