@@ -176,14 +176,14 @@ TI_CAMERAHAL_USB_SRC := \
 TI_CAMERAHAL_EXIF_LIBRARY := libexif
 # libexif is now libjhead in later API levels.
 
-ifdef ANDROID_API_KK_OR_LATER
-ifdef ANDROID_API_LP_OR_LATER
-    TI_CAMERAHAL_EXIF_LIBRARY := libjhead
-else ifneq ($(filter 4.4.3 4.4.4,$(PLATFORM_VERSION)),)
+#ifdef ANDROID_API_KK_OR_LATER
+#ifdef ANDROID_API_LP_OR_LATER
+#    TI_CAMERAHAL_EXIF_LIBRARY := libjhead
+#else ifneq ($(filter 4.4.3 4.4.4,$(PLATFORM_VERSION)),)
     # Only 4.4.3 and 4.4.4 KK use libjhead
-    TI_CAMERAHAL_EXIF_LIBRARY := libjhead
-endif
-endif
+#    TI_CAMERAHAL_EXIF_LIBRARY := libjhead
+#endif
+#endif
 
 TI_CAMERAHAL_COMMON_SHARED_LIBRARIES := \
     libui \

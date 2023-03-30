@@ -15,6 +15,8 @@ on fs
     insmod /system/lib/modules/omaplfb.ko
     insmod /system/vendor/lib/modules/pvrsrvkm.ko
     insmod /system/vendor/lib/modules/omaplfb.ko
+    insmod /system/vendor/pvrsrvkm.ko
+    insmod /system/vendor/omaplfb.ko
 
 service pvrsrvinit /system/bin/pvrsrvinit
     class core
