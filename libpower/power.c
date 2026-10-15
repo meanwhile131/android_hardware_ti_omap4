@@ -176,6 +176,21 @@ static int boostpulse_open(struct omap_power_module *omap_device)
     return omap_device->boostpulse_fd;
 }
 
+/*
+ * This kernel is built with CONFIG_EARLYSUSPEND: the display is powered down
+ * from early_suspend(), which userspace triggers by writing "mem" to
+ * /sys/power/state, and it is only brought back by late_resume(), which
+ * userspace has to trigger by writing "on".  Android's suspend loop
+ * (libsuspend) never writes "on" on its own, so the panel stays dark even
+ * though the framework believes the display is on.  PowerManagerService calls
+ * setInteractive(true) from the display power state change, right after it has
+ * disabled auto-suspend, which is exactly when late_resume() has to run.
+ */
+static void earlysuspend_resume(void)
+{
+    sysfs_write("/sys/power/state", "on");
+}
+
 static void omap_power_set_interactive(struct power_module *module,
                                                int on)
 {
@@ -183,6 +198,14 @@ static void omap_power_set_interactive(struct power_module *module,
                                    (struct omap_power_module *) module;
     char buf[FREQ_BUF_SIZE];
     int len;
+
+    /*
+     * Kick late_resume() when the display becomes interactive again.  Done
+     * before the checks below so it also happens if the cpufreq settings
+     * could not be configured.
+     */
+    if (on && omap_device->screen_state != on)
+        earlysuspend_resume();
 
     if (!omap_device->inited || omap_device->screen_state == on)
         return;
